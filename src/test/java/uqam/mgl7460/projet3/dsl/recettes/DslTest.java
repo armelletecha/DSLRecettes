@@ -45,7 +45,7 @@ public class DslTest {
     		rec.ingredients("oignons", 4);
     		rec.ingredients("bouillon de poulet",3, "tasse");
     		rec.ingredients("beurre", 4, "cuillere a soupe"); 
-    		rec.etapes_recette("Peler les oignons",
+    		rec.etapes("Peler les oignons",
     							"Faire sauter les oignons dans le beurre",
     							"Ajouter le bouillon du poulet",
     							"Faire mijoter 30 minutes") ;
@@ -66,7 +66,7 @@ public class DslTest {
     		rec.quantite(4);
 			rec.unite_quantite("personne");
 			rec.unite_temps("minute");
-    		rec.etapes_recette("Peler les oignons",
+    		rec.etapes("Peler les oignons",
     							"Faire sauter les oignons dans le beurre",
     							"Ajouter le bouillon du poulet",
     							"Faire mijoter 30 minutes") ;

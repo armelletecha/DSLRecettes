@@ -13,7 +13,7 @@ public class Main
     		rec.ingredients("oignons", 4);
     		rec.ingredients("bouillon de poulet",3, "tasse");
     		rec.ingredients("beurre", 4, "cuillere a soupe") ;  
-    		rec.etapes_recette("Peler les oignons",
+    		rec.etapes("Peler les oignons",
     							"Faire sauter les oignons dans le beurre",
     							"Ajouter le bouillon du poulet",
     							"Ajouter le beurre");

@@ -18,7 +18,7 @@ public class RecetteTest {
     		rec.temps_preparation("00:45");
 			rec.unite_temps("minute");
     		rec.ingredients("oignons", 4) ;  
-    		rec.etapes_recette("Peler les oignons") ;
+    		rec.etapes("Peler les oignons") ;
     	}) ;
 			
 		assertEquals(recette.complete(), true) ;
@@ -36,7 +36,7 @@ public class RecetteTest {
     		rec.ingredients("oignons", 4);
     		rec.ingredients("bouillon de poulet",3, "tasse");
     		rec.ingredients("beurre", 4, "cuillere a soupe");  
-    		rec.etapes_recette("Peler les oignons",
+    		rec.etapes("Peler les oignons",
 								"Faire sauter les oignons dans le beurre",
     							"Ajouter le bouillon du poulet",
     							"Faire mijoter 30 minutes");
@@ -66,12 +66,12 @@ public class RecetteTest {
     		rec.temps_preparation("00:45");
 			rec.unite_temps("minute");
     		rec.ingredients("oignons", 4) ;  
-    		rec.etapes_recette("Peler les oignons") ;
+    		rec.etapes("Peler les oignons") ;
     	}) ;
 
 		assertEquals(recette.complete(), false) ;
 	}
-	/*	
+		
 	@Test
 	public void creerRecetteIncompleteNonIngredientTest() {
 		recette = new Recette ( rec -> {
@@ -80,12 +80,12 @@ public class RecetteTest {
 			rec.unite_quantite("portion");
     		rec.temps_preparation("00:45");
 			rec.unite_temps("minute");
-    		rec.ingredients(" ",0) ;  
-    		rec.etapes_recette(new Etape("Peler les oignons")) ;
+    		rec.ingredients() ;  
+    		rec.etapes("Peler les oignons") ;
     	}) ;
 		assertEquals(recette.complete(), false) ;
 	}
-*/	
+	
 	@Test
 	public void creerRecetteIncompleteNonEtapeTest() {
 		recette = new Recette ( rec -> {
@@ -95,7 +95,7 @@ public class RecetteTest {
     		rec.temps_preparation("00:45");
 			rec.unite_temps("minute");
     		rec.ingredients("oignons", 4) ;  
-    		rec.etapes_recette() ;
+    		rec.etapes() ;
     	}) ;
 
 		assertEquals(recette.complete(), false) ;

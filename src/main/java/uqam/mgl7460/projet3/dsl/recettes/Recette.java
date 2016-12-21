@@ -14,7 +14,7 @@ public class Recette {
 	private String[] temps_preparation;
 	private String unite_temps;
 	private Ingredient[] ingredients;
-	private Etape [] etapes_recette;
+	private Etape [] etapes;
 	final private int NOMBRE_MAX_INGREDIENTS = 40;
 	private int compteur_ingredient = 0;
 	final private int NOMBRE_MAX_ETAPES = 40;
@@ -35,7 +35,7 @@ public class Recette {
 		this.temps_preparation = temps_preparation.split(":") ;
 		this.unite_temps = unite_temps ;
 		this.ingredients = ingredients ;
-		this.etapes_recette = etapes_recette ;
+		this.etapes = etapes_recette ;
 	}
 	
 	protected void titre (String t) {
@@ -60,14 +60,6 @@ public class Recette {
 	}
 
 	
-	/*protected void ingredients_recette(Ingredient ... values ) {
-		this.ingredients_recette = new Ingredient [NOMBRE_MAX_INGREDIENTS];
-		for (Ingredient i : values) {
-			this.ingredients_recette[compteur_ingredient] = i;
-			compteur_ingredient ++;
-		}
-	}
-	*/
 	protected void creation_tab_ingredients() {
 		if (ingredients == null)
 			this.ingredients = new Ingredient [NOMBRE_MAX_INGREDIENTS];
@@ -80,6 +72,9 @@ public class Recette {
 		this.compteur_ingredient ++;
 	}
 	
+	protected void ingredients() {
+	}
+	
 	protected void ingredients(String u, int n, String v) {
 		creation_tab_ingredients();
 		Ingredient temp = new Ingredient (u,n,v);
@@ -87,11 +82,11 @@ public class Recette {
 		compteur_ingredient ++;
 	}
 	
-	protected void etapes_recette (String ... values) {
-		this.etapes_recette = new Etape [NOMBRE_MAX_ETAPES];
+	protected void etapes (String ... values) {
+		this.etapes = new Etape [NOMBRE_MAX_ETAPES];
 		for (String e : values) {
 			Etape temp = new Etape (e); 
-			this.etapes_recette[compteur_etape] = temp;
+			this.etapes[compteur_etape] = temp;
 			compteur_etape ++ ;
 		}
 	}
@@ -157,8 +152,8 @@ public class Recette {
 				(this.unite_quantite != null) &&
 				(this.temps_preparation != null) &&
 				(this.unite_temps != null) && 
-				(this.ingredients[0] != null) &&
-				(this.etapes_recette[0] != null ))
+				(this.ingredients != null) &&
+				(this.etapes[0] != null ))
 			return true ;
 		return false ;
 	}
@@ -170,14 +165,14 @@ public class Recette {
 					"pour " + this.quantite + " " +obtenirUnite(this.unite_quantite).toString(this.quantite)+ "\n" +
 					"Temps de preparation" + ": " +this.temps_preparation[1]+ " " +obtenirUnite(this.unite_temps).toString(Integer.parseInt(this.temps_preparation[1]))+ "\n \n"+
 					"Ingredients \n" + toStringIngredients(this.ingredients) + "\n" +
-					"Preparation \n" + toStringEtapes(this.etapes_recette) ;
+					"Preparation \n" + toStringEtapes(this.etapes) ;
 		}
 		else {
 			return this.titre + "\n" +
 					"pour " + this.quantite + " " + obtenirUnite(this.unite_quantite).toString(this.quantite)+ "\n" +
 					"Temps de preparation" + ": " + this.temps_preparation[0]+ " " + obtenirUnite(this.unite_temps).toString(Integer.parseInt(this.temps_preparation[0]))+ " " +this.temps_preparation[1]+ " " + new Minute().toString(Integer.parseInt(this.temps_preparation[1]))+  "\n \n"+
 					"Ingredients \n" + toStringIngredients(this.ingredients) + "\n" +
-					"Preparation \n" + toStringEtapes(this.etapes_recette)  ;
+					"Preparation \n" + toStringEtapes(this.etapes)  ;
 		}
 		
 	}
