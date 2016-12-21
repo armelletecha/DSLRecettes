@@ -1,113 +1,140 @@
 package uqam.mgl7460.projet3.dsl.recettes;
 
-import java.util.ArrayList;
+import unites.Heure;
+import unites.Minute;
+import unites.Personne;
+import unites.Portion;
+import unites.Tasse;
+import unites.Unite;
 
 public class Recette {
 	private String titre;
 	private int quantite;
-	private Unite unite_quantite;
-	private String temps_preparation;
+	private String unite_quantite;
+	private String[] temps_preparation;
 	private String unite_temps;
+	private Ingredient[] ingredients_recette;
+	private Etape [] etapes_recette;
+	//private ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>() ;
+	//private ArrayList<Etape> etapes = new ArrayList<Etape>() ;
+	final private int NOMBRE_MAX_INGREDIENTS = 40;
+	private int compteur_ingredient = 0;
+	final private int NOMBRE_MAX_ETAPES = 40;
+	private int compteur_etape = 0;
 	
-	private ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>() ;
-	private ArrayList<Etape> etapes = new ArrayList<Etape>() ;
-	
-	Recette( RecetteBuilder r ) {
+	public Recette( RecetteBuilder r ) {
 		r.build( this );
 	}
 	
-	//*******Setters**********************
-	protected void setTitre( String t ) {
-		titre = t;
+	protected void titre (String t) {
+		this.titre = t;
 	}
 	
-	protected void setQuantite( int q ){
-		this.quantite = q;
-	}
-	
-	protected void setUniteQuantite(Unite u) {
+	protected void unite_quantite(String u) {
 		this.unite_quantite = u;
 	}
-	
-	protected void setTempsPreparation(String t) {
-		this.temps_preparation = t;
+	protected void quantite (int q) {
+		this.quantite =q;
 	}
 	
-	protected void setUniteTemps( String temps ) {
-		this.unite_temps = temps ;
+	protected String[] temps_preparation (String t) {
+		this.temps_preparation = t.split(":");
+		//String[] t = t.split(":") ;
+		return this.temps_preparation ;
 	}
 	
-	protected void setIngredients( ArrayList<Ingredient> ingredient ) {
-		for (int i=0; i<ingredient.size(); i++)
-			this.ingredients.add(ingredient.get(i)) ;
+	protected void unite_temps (String u) {
+		this.unite_temps =u;
+	}
+
+	
+	protected void ingredients_recette(Ingredient ... values ) {
+		this.ingredients_recette = new Ingredient [NOMBRE_MAX_INGREDIENTS];
+		for (Ingredient i : values) {
+			this.ingredients_recette[compteur_ingredient] = i;
+			compteur_ingredient ++;
+		}
 	}
 	
-	protected void setEtapes( ArrayList<Etape> etape ) {
-		for (int i=0; i<etape.size(); i++)
-			this.etapes.add(etape.get(i)) ;
+	protected void etapes_recette (Etape ... values) {
+		this.etapes_recette = new Etape [NOMBRE_MAX_ETAPES];
+		for (Etape e : values) {
+			this.etapes_recette[compteur_etape] = e;
+			compteur_etape ++ ;
+		}
 	}
 	
-	//*****getters***************
-	protected String getTitre() {
-		return this.titre ;
+	//convertir le string recu en unite de temps
+	public Unite obtenirUnite(String unite) {
+		Unite resultat = null;
+		
+		switch (unite) {
+		case "heure":
+			resultat = new Heure();
+			break ;
+		case "Portion":
+			resultat = new Portion();
+			break ;
+		case "minute":
+			resultat = new Minute();
+			break ;
+		case "personne":
+			resultat = new Personne();
+			break ;
+		case "tasse":
+			resultat = new Tasse();
+			break ;
+		default:
+			resultat = null;
+		}
+		return resultat ;
 	}
-	
-	protected int getQuantite(){
-		return this.quantite;
-	}
-	
-	protected Unite getUniteQuantite() {
-		return this.unite_quantite;
-	}
-	
-	protected String[] getTempsPreparation() {
-		String[] t = this.temps_preparation.split(":") ;
-		return t ;
-	}
-	
-	protected String[] getUniteTemps() {
-		String[] t = this.unite_temps.split(":") ;
-		return t ;
-	}
-	
-	protected ArrayList<Ingredient> getIngredients() {
-		return this.ingredients ;
-	}
-	
-	protected ArrayList<Etape> getEtapes() {
-		return this.etapes ;
-	}
-	
-	//********methodes pour l affichage des ingredients et des etapes
-	public String toStringIngredients(ArrayList<Ingredient> listeIngredients) {
-		String resultat = "";
-		for (int i=0; i<listeIngredients.size(); i++)
-			resultat = resultat + listeIngredients.get(i).toString()+ "\n" ;
+
+	//convertir le tableau d'ingredients en string afin de l'afficher
+	public String toStringIngredients(Ingredient[] ing) {
+		String resultat = "" ;
+		for (int i=1; i<=ing.length; i++) {
+			if (ing[i-1] == null){
+				resultat = resultat + "" ;
+			}
+			else {
+				resultat = resultat +i+ ". " +ing[i-1] ;
+				resultat = resultat + "\n" ;
+			}
+		}
 		return resultat ;
 	}
 	
-	public String toStringEtapes(ArrayList<Etape> listeEtapes) {
-		String resultat = "";
-		for (int i=1; i<listeEtapes.size(); i++)
-			resultat = resultat + i+ ". " +listeEtapes.get(i).toString()+ "\n" ;
+	//convertir le tableau d'etapes en string afin de l'afficher
+	public String toStringEtapes(Etape[] et) {
+		String resultat = "" ;
+		for (int i=1; i<=et.length; i++) {
+			if (et[i-1] == null){
+				resultat = resultat + "" ;
+			}
+			else {
+				resultat = resultat +i+ ". " +et[i-1] ;
+				resultat = resultat + "\n" ;
+			}
+		}
 		return resultat ;
 	}
 	
 	@Override
 	public String toString() {
-		if (this.getTempsPreparation()[1] == "00"){
-			return this.getTitre() + "\n" +
-					"pour " + this.getQuantite() + " " +this.getUniteQuantite().toString()+ "\n" +
-					"Temps de preparation" + ": " +this.getTempsPreparation()[1]+ " " +this.getUniteTemps()[1]+ "\n \n"+
-					"Ingredients \n" + toStringIngredients(this.getIngredients())+ "\n" +
-					"Preparation \n" + toStringEtapes(this.getEtapes()) ;
+		if (this.temps_preparation[0].equals("00")){
+			return this.titre + "\n" +
+					"pour " + this.quantite + " " +obtenirUnite(this.unite_quantite).toString(this.quantite)+ "\n" +
+					"Temps de preparation" + ": " +this.temps_preparation[1]+ " " +obtenirUnite(this.unite_temps).toString(Integer.parseInt(this.temps_preparation[1]))+ "\n \n"+
+					"Ingredients \n" + toStringIngredients(this.ingredients_recette) + "\n" +
+					"Preparation \n" + toStringEtapes(this.etapes_recette) ;
 		}
 		else {
-			return this.getTitre() + "\n" +
-					"pour " + this.getQuantite() + " " +this.getUniteQuantite().toString()+ "\n" +
-					"Temps de preparation" + ": " +this.getTempsPreparation()[0]+ " " +this.getUniteTemps()[0]+ " " +this.getTempsPreparation()[1]+ " " +this.getUniteTemps()[1]+  "\n \n"+
-					"Ingredients \n" + toStringIngredients(this.getIngredients())+ "\n" +
-					"Preparation \n" + toStringEtapes(this.getEtapes()) ;
+			return this.titre + "\n" +
+					"pour " + this.quantite + " " + obtenirUnite(this.unite_quantite).toString(this.quantite)+ "\n" +
+					"Temps de preparation" + ": " + this.temps_preparation[0]+ " " + obtenirUnite(this.unite_temps).toString(Integer.parseInt(this.temps_preparation[0]))+ " " +this.temps_preparation[1]+ " " + new Minute().toString(Integer.parseInt(this.temps_preparation[1]))+  "\n \n"+
+					"Ingredients \n" + toStringIngredients(this.ingredients_recette) + "\n" +
+					"Preparation \n" + toStringEtapes(this.etapes_recette)  ;
 		}
 		
 	}
