@@ -87,10 +87,11 @@ public class Recette {
 		compteur_ingredient ++;
 	}
 	
-	protected void etapes_recette (Etape ... values) {
+	protected void etapes_recette (String ... values) {
 		this.etapes_recette = new Etape [NOMBRE_MAX_ETAPES];
-		for (Etape e : values) {
-			this.etapes_recette[compteur_etape] = e;
+		for (String e : values) {
+			Etape temp = new Etape (e); 
+			this.etapes_recette[compteur_etape] = temp;
 			compteur_etape ++ ;
 		}
 	}

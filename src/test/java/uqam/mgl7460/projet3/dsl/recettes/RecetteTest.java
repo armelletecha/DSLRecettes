@@ -18,7 +18,7 @@ public class RecetteTest {
     		rec.temps_preparation("00:45");
 			rec.unite_temps("minute");
     		rec.ingredients("oignons", 4) ;  
-    		rec.etapes_recette(new Etape("Peler les oignons")) ;
+    		rec.etapes_recette("Peler les oignons") ;
     	}) ;
 			
 		assertEquals(recette.complete(), true) ;
@@ -36,11 +36,10 @@ public class RecetteTest {
     		rec.ingredients("oignons", 4);
     		rec.ingredients("bouillon de poulet",3, "tasse");
     		rec.ingredients("beurre", 4, "cuillere a soupe");  
-    		rec.etapes_recette(new Etape("Peler les oignons"),
-    				new Etape("Faire sauter les oignons dans le beurre"),
-    				new Etape("Ajouter le bouillon du poulet"),
-    				new Etape("Faire mijoter 30 minutes")
-    				) ;
+    		rec.etapes_recette("Peler les oignons",
+								"Faire sauter les oignons dans le beurre",
+    							"Ajouter le bouillon du poulet",
+    							"Faire mijoter 30 minutes");
     	}) ;
 		String resultatAttendu = "Soupe a l'oignon\n" +
 								"pour 4 personnes\n" +
@@ -67,7 +66,7 @@ public class RecetteTest {
     		rec.temps_preparation("00:45");
 			rec.unite_temps("minute");
     		rec.ingredients("oignons", 4) ;  
-    		rec.etapes_recette(new Etape("Peler les oignons")) ;
+    		rec.etapes_recette("Peler les oignons") ;
     	}) ;
 
 		assertEquals(recette.complete(), false) ;
