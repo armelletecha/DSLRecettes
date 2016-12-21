@@ -26,6 +26,20 @@ public class Recette {
 		r.build( this );
 	}
 	
+	public Recette(String titre, 
+			int quantite, String unite_quantite, 
+			String temps_preparation, String unite_temps,
+			Ingredient[] ingredients_recette,
+			Etape[] etapes_recette) {
+		this.titre = titre ;
+		this.quantite = quantite ;
+		this.unite_quantite = unite_quantite ;
+		this.temps_preparation = temps_preparation.split(":") ;
+		this.unite_temps = unite_temps ;
+		this.ingredients_recette = ingredients_recette ;
+		this.etapes_recette = etapes_recette ;
+	}
+	
 	protected void titre (String t) {
 		this.titre = t;
 	}
@@ -93,12 +107,12 @@ public class Recette {
 	//convertir le tableau d'ingredients en string afin de l'afficher
 	public String toStringIngredients(Ingredient[] ing) {
 		String resultat = "" ;
-		for (int i=1; i<=ing.length; i++) {
-			if (ing[i-1] == null){
+		for (int i=0; i<ing.length; i++) {
+			if (ing[i] == null){
 				resultat = resultat + "" ;
 			}
 			else {
-				resultat = resultat +i+ ". " +ing[i-1] ;
+				resultat = resultat +ing[i] ;
 				resultat = resultat + "\n" ;
 			}
 		}
@@ -118,6 +132,17 @@ public class Recette {
 			}
 		}
 		return resultat ;
+	}
+	
+	public Boolean complete() {
+		if ((this.titre != null) && (this.quantite != 0) && 
+				(this.unite_quantite != null) &&
+				(this.temps_preparation != null) &&
+				(this.unite_temps != null) && 
+				(this.ingredients_recette[0] != null) &&
+				(this.etapes_recette[0] != null ))
+			return true ;
+		return false ;
 	}
 	
 	@Override
